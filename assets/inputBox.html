@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Input</title>
+    <style>
+        body{
+            background-color: rgba(43, 34, 80, 0.2);
+            text-align: center;
+            font-family: "Lucida Sans";
+        }
+        .container{
+            margin-top: 20vh;
+            display: inline-block;
+            position: relative;
+        }
+        .txt{
+            color: rgb(44,35,81);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            font-size: 15pt;
+            font-weight: bold;
+        }
+        .btn{
+            background-color: rgb(44,35,81);
+            padding: 15px 17px;
+            border: 1px solid #000;
+            color: #fff;
+            border-radius: 20%;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 17pt;
+        }
+        .txtBox{
+            background-color: rgba(44, 35, 81, 0.5);
+            padding: 10px;
+            border: none;
+            outline: none;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="txt" id="txt1">İsim giriniz...</span><br>
+        <input id="txtBox"  type="text" name="" id="" class="txtBox"><br>
+        <input id="btn1" class="btn" type="button" value="Tamam">        
+    </div>
+    <script>
+        const {ipcRenderer} = require("electron");
+        console.log("started !!!");
+        console.log(ipcRenderer);
+        var txt1 = document.querySelector("#txt1");
+        var btn1 = document.querySelector("#btn1");
+        var answer = document.querySelector("#txtBox");
+        ipcRenderer.once("inf", function(e, data) {
+            txt1.innerText = data.text;
+            answer.value = data.ans;
+        });
+        btn1.addEventListener("click", () => {
+            
+            ipcRenderer.send("answer", answer.value);
+        });
+        answer.addEventListener("keydown", (e) => {
+            if(e.which == 13){
+                ipcRenderer.send("answer", answer.value);
+            }
+        });
+    </script>
+    
+</body>
+</html>

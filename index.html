@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <title>Mp3 Player</title>
+    <link rel="stylesheet" href="./assets/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/animate.css">
+    <link rel="stylesheet" href="./assets/style.css">
+	<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+
+</head>
+<body>
+    <div id="app" class="container" @click.self="pageClick">
+        <!-- SIDEBAR -->
+        <div class="wrapper-sidebar">
+            <div  class="sidebar" id="sidebar">
+                <div @click="clickWrap(inx)" class="li-wrap" v-for="(playlist, inx) in playlists" >
+
+                
+                    <div 
+                        @click="clickPlaylist(inx, $event)" 
+                        
+                        inx="inx" 
+                        class="list-item">
+                        {{playlist.name}}
+
+                        
+                    </div>
+                    <div class="li-toolbox il-block">
+                        <i @click="deletePlaylist(inx)" class="fas fa-trash-alt"></i>
+                        <i @click="editPlaylist(inx)" class="fas fa-cog" style="float: right;margin-left:15px"></i>
+                    </div>
+                </div>
+                <div @click="addPlaylist" style="width: 270px;" class="list-item center large block-hover"> 
+                    <i class="fas fa-plus-circle"></i> 
+                </div>
+                
+                
+                
+            </div>
+            <!-- ITEMS -->
+            <transition enter-active-class="fadeInLeft animated" leave-active-class="fadeOutLeft animated">
+            
+            
+            <div id="items" class="sidebar-item" v-show="listDisplay" >
+                <span>  {{currentPlaylist}} </span>
+                <div class="li-wrap" v-if="listItems.length == 0">
+                    <div class="list-item">
+                        <span >Bu playlist'de müzik bulunmamaktadır.</span>
+
+                    </div>
+                </div>
+                
+                <div class="li-wrap"   v-for="(item,inx) in listItems">
+                    <div @click="clickItem(inx)" v-show="listDisplay" class="list-item main-item">
+                        {{item}}
+                        
+                    </div>
+
+                    <div class="li-toolbox il-block">
+                        <i @click="deleteItem(inx)" class="fas fa-trash-alt" style="float: right; margin-left: 15px;"></i>
+                        <i class="fas fa-arrows-alt move" style="float: right;"></i>
+                    </div>
+                </div>
+                <div  style="width: 260px;" class="list-item center large block-hover"> 
+                    <i @click="addItem" class="fas fa-plus-circle"></i> 
+                    <i @click="repeatBtn" style="float: left;"  class="fas" :class="mod"></i>
+                </div>
+                <div class="playlist-tools">
+                    
+    
+    
+                </div>
+            </div>
+            </transition>
+        </div>
+        <!-- MAIN SCREEN -->
+        <div class="ms-container center">
+            
+            <div class="main-screen" v-if="metadata != null">
+                <h1 style="margin-bottom: -5px;">
+                    
+                    Current Music
+                </h1><br>
+               
+    
+                    <div  class="center album-cover">
+                        <transition  enter-active-class="fadeInDown animated" leave-active-class="fadeOutDown animated" appear>
+
+                            <img v-if="displayThumbnail" :src="thumbNailSrc" alt="" srcset="">
+                        </transition>
+                            
+                    </div>
+                <br>
+                <div  class="center il-block ms-title">
+                    {{metadata.common.title}}
+                </div><br>
+                <div class="ms-singer il-block">
+                    {{metadata.common.artist}}
+                </div><br>
+                <div v-if="activePlaylistInx != -1" class="ms-singer il-block">
+                    <b>Current Playlist: </b> {{playlists[activePlaylistInx].name}}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="bottom" id="bottom">
+            <div class="container-playbar">
+                <div class="wrapper-timebar">
+                    <div class="time-current">{{currentTime}}</div>
+                    <input 
+                        :value="CTPercent" 
+                        @input="seek($event)" 
+                        min="0" max="100" type="range" 
+                        class="timebar"
+                        id="timebar"
+                        >
+                    <div class="time-duration"> {{duration}} </div>
+
+                </div><br>
+                <div class="wrapper-timebar-tools">
+                    <div @click="changeSong(false)" class="btn-playbar"><i class="fas fa-backward"></i></div>
+                    <div class="btn-playbar" @click="playBtn">
+                        <i v-if="status == 'paused' || status == 'stopped'" class="fas fa-play"></i>
+                        <i v-if="status == 'played'" class="fas fa-pause"></i>
+                    </div>
+                    
+                    <div
+                        @mouseenter="volumeBtn(true)" 
+                        @mouseleave="volumeBtn(false)" 
+                        class="wrapper-volumbar-button il-block">
+                            <div 
+                            class="btn-playbar"
+                            >
+                            <i class="fas fa-volume-up"></i>
+                            </div>
+
+                            <div v-show="volumebar"  class="wrapper-volumbar">
+                                <input
+                                    id="volumebar" 
+                                    min="0" max="1" step="0.01" type="range" class="volumebar"
+                                    @input = "changeVolume($event)"
+                                    >
+                            </div>
+                    </div>
+                    
+                    <!-- <div @click="seek($event)" style="z-index: 2;" class="playerbar-time">
+                        <div class="current-time-bar" :style=" {'width' : CTPercent + '%'} ">
+                            <div v-on:clik.stop class="current-time"></div>
+                        </div>
+                        
+                    </div> -->
+                    <div @click="changeSong(true)" class="btn-playbar" style="float: right;"><i class="fas fa-forward"></i> </div>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./assets/lib/BcPlayer.js"></script>
+    <script src="./assets/renderer.js"></script>
+
+    <script>
+       
+    </script>
+</body>
+</html>

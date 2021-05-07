@@ -6,10 +6,19 @@ npm install <br/>
 npm run <br/>
 
 ## Features
-
-- Create playlist, drag and drop them to change position, rename it and delete it.
-- Add music from your local storage, change them sort and delete it from playlist.
-- Play and pause music, go to the next and preview track from playlist, change it's repeat method to random, next or cycle next.
+ ### Playlist
+- Create playlist,
+- Drag and drop them to change position
+- Rename it and delete it.
+ ### Playlist
+- Add music from your local storage to playlist.  
+- Change them sort.
+- Delete it from playlist.
+ ### Music
+- Play and pause music.
+- Change volume. 
+- Go to the next and preview track from playlist.
+- Change it's repeat method to random, next or cycle next.
 
 
 ### ScreenShots

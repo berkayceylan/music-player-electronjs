@@ -10,11 +10,11 @@ npm run <br/>
 - Create playlist,
 - Drag and drop them to change position
 - Rename it and delete it.
- ### Playlist
+ ### Music
 - Add music from your local storage to playlist.  
 - Change them sort.
 - Delete it from playlist.
- ### Music
+ ### Player
 - Play and pause music.
 - Change volume. 
 - Go to the next and preview track from playlist.

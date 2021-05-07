@@ -7,7 +7,7 @@ npm run <br/>
 
 ScreenShots
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/ss-1.PNG?raw=true)
+![Alt text](https://github.com/berkayceylan150/music-player-electronjs/blob/master/screenshots/ss-1.PNG?raw=true "Title")
 
 
 Created by Berkay CEYLAN

@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require("electron");
 const Playlist = require(__dirname + "/assets/lib/playlist.js");
 const InputBox = require(__dirname + "/assets/lib/inputBox.js");
+const Store = require(__dirname + '/assets/lib/store.js');
 const musicMetadata = require("music-metadata");
 // var mpg = require("mpg123");
 // const { createAudio } = require('node-mp3-player')
@@ -30,6 +31,11 @@ app.on("ready", () => {
     ipcMain.on("addPlaylist", () => {
         //createInputBox("Playlist ismini giriniz...", mainWindow);
         InputBox.createInputBox("Playlist ismini giriniz.", mainWindow, (data) => {
+            // var store = new Store({
+            //     configName: 'deneme',
+            //     defaults: {}
+            // });
+            // store.set('windowBounds', 'asdasd');
             global.playlist.addPlaylist(data);
             mainWindow.webContents.send("playlistChanged");
         });

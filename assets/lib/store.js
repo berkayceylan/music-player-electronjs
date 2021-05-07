@@ -7,11 +7,13 @@ class Store{
         
         //Set user Data Path
         this.path = path.join(userDataPath, opt.configName +  ".json");
+       
         this.data = parseDataFile(this.path, opt.defaults);
         console.log(this.path);
     }
     get(key){
         this.data = parseDataFile(this.path, "");
+        console.log(this.data);
         return this.data[key];
     }
     set(key, value){

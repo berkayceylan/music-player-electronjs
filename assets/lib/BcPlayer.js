@@ -5,19 +5,13 @@ class BcPlayer{
         //r = repeat
         this.rAll = true;
         this.rRandon = false;
-
         this.itemInx = -1;
         this.activePlaylistInx = -1;
-
         this.isPlay = true;
-
         this.el.volume = .5;
-
         this.status = "stopped"
-        this.mod="repeatAll";
-
         this.list = [];
-        //names for backend, classes for frontend
+        this.mod="repeatAll";
         this.mods = [
             {
                 name: "repeatAll",
@@ -42,8 +36,6 @@ class BcPlayer{
         ];
         this.modInx = 0;
         let my = this;
-
-        //check for stop
         this.el.onpause = function(){
             if(my.el.duration == my.el.currentTime){
                 my.stopped();

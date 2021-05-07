@@ -1,3 +1,12 @@
+@font-face {
+    font-family: fontAwesome;
+    src: url(./fonts/fa-solid-900.woff2);
+  }
+.fas, .fa{
+    font-family: fontAwesome !important;
+}
+
+
 body, div{
     margin: 0;
     padding: 0;

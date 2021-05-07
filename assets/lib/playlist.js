@@ -52,6 +52,7 @@ class Playlist extends Store{
     }
     addPlaylist(_name){
         this.playlists = this.get("playlists");
+        console.log(this.playlists);
         this.playlists.push({
             name: _name,
             items: []

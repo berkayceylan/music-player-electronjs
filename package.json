@@ -14,6 +14,6 @@
   },
   "dependencies": {
     "jquery": "^3.5.1",
-    "music-metadata": "^6.4.0"
+    "music-metadata": "^10.9.0"
   }
 }

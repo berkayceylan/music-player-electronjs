@@ -9,8 +9,8 @@
   "author": "Berkay CEYLAN",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^7.3.3",
-    "electron-packager": "^14.2.1"
+    "electron": "^34.2.0",
+    "electron-packager": "^17.1.2"
   },
   "dependencies": {
     "jquery": "^3.5.1",
